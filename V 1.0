@@ -1,0 +1,149 @@
+import requests
+from bs4 import BeautifulSoup
+print("(A) Albufeira;")
+print("(B) Lisboa;")
+print("(C) Porto;")
+print("(D) Viana do Castelo;")
+print("(E) Braga;")
+print("(F) Vila Real;")
+print("(G) Aveiro;")
+print("(H) Viseu;")
+print("(I) Coimbra;")
+print("(J) Castelo Branco;")
+print("(K) Leiria;")
+print("(L) Portalegre;")
+print("(M) Évora;")
+print("(N) Setúbal;")
+print("(O) Beja;")
+print("(P) Faro;")
+print("(Q) Madeira;")
+city = (input("Cidade: "))
+if city.upper() == "A":
+    web_loc = "https://www.bbc.com/weather/2272222"
+elif city.upper() == "B":
+    web_loc = "https://www.bbc.com/weather/2267057"
+elif city.upper() == "C":
+    web_loc = "https://www.bbc.com/weather/2735943"
+elif city.upper() == "D":
+    web_loc = "https://www.bbc.com/weather/2732773"
+elif city.upper() == "E":
+    web_loc = "https://www.bbc.com/weather/2742032"
+elif city.upper() == "F":
+    web_loc = "https://www.bbc.com/weather/2732438"
+elif city.upper() == "G":
+    web_loc = "https://www.bbc.com/weather/2742611"
+elif city.upper() == "H":
+    web_loc = "https://www.bbc.com/weather/2732265"
+elif city.upper() == "I":
+    web_loc = "https://www.bbc.com/weather/2740637"
+elif city.upper() == "J":
+    web_loc = "https://www.bbc.com/weather/2269514"
+elif city.upper() == "K":
+    web_loc = "https://www.bbc.com/weather/2267095"
+elif city.upper() == "L":
+    web_loc = "https://www.bbc.com/weather/2264508"
+elif city.upper() == "M":
+    web_loc = "https://www.bbc.com/weather/2268406"
+elif city.upper() == "N":
+    web_loc = "https://www.bbc.com/weather/2262963"
+elif city.upper() == "O":
+    web_loc = "https://www.bbc.com/weather/2270985"
+elif city.upper() == "P":
+    web_loc = "https://www.bbc.com/weather/2268339"
+elif city.upper() == "Q":
+    web_loc = "https://www.bbc.com/weather/6301791"
+else:
+    print("Cidade não suportada")
+page = requests.get(web_loc)
+soup = BeautifulSoup(page.content, "html.parser")
+tomorrow_day = soup.find(id="daylink-1")
+tomorrow = tomorrow_day.find(class_="wr-date__long")
+loc = soup.find(class_="wr-c-location__name gel-paragon").get_text()
+location = loc.split()
+loc_pt = {
+    "Albufeira": "Albufeira",
+    "Lisbon": "Lisboa",
+    "Porto": "Porto",
+    "Viana": "Viana do Castelo",
+    "Braga": "Braga",
+    "Vila": "Vila Real",
+    "Aveiro": "Aveiro",
+    "Viseu": "Viseu",
+    "Coimbra": "Coimbra",
+    "Castelo": "Castelo Branco",
+    "Leiria": "Leiria",
+    "Portalegre": "Portalegre",
+    "Évora": "Évora",
+    "Setúbal": "Setúbal",
+    "Beja": "Beja",
+    "Faro": "Faro",
+    "Madeira": "Madeira"
+}
+print(loc_pt[location[0]])
+day = str(tomorrow.find(class_="wr-date__long__dotm").get_text())
+day_pt = {
+    "1st ": "1",
+    "2nd ": "2",
+    "3rd ": "3",
+    "4th ": "4",
+    "5th ": "5",
+    "6th ": "6",
+    "7th ": "7",
+    "8th ": "8",
+    "9th ": "9",
+    "10th ": "10",
+    "11th ": "11",
+    "13th ": "13",
+    "14th ": "14",
+    "15th ": "15",
+    "16th ": "16",
+    "17th ": "17",
+    "18th ": "18",
+    "19th ": "19",
+    "20th ": "20",
+    "21st ": "21",
+    "22nd ": "22",
+    "23rd ": "23",
+    "24th ": "24",
+    "25th ": "25",
+    "26th ": "26",
+    "27th ": "27",
+    "28th ": "28",
+    "29th ": "29",
+    "30th ": "30",
+    "31st ": "31",
+}
+month = tomorrow.find(class_="wr-date__long__month").get_text()
+month_pt = {
+    "January": "janeiro",
+    "February": "janeiro",
+    "March": "março",
+    "April": "abril",
+    "May": "maio",
+    "June": "junho",
+    "July": "julho",
+    "August": "agosto",
+    "September": "setembro",
+    "October": "outubro",
+    "November": "novembro",
+    "December": "dezembro"
+}
+weekday = tomorrow_day.find(class_="wr-date__long").get_text()
+week = weekday.split()
+weekday_ing = week[0]
+weekday_pt = {
+    "Monday": "Segunda-feira",
+    "Tuesday": "Terça-feira",
+    "Wednesday": "Quarta-feira",
+    "Thursday": "Quinta-feira",
+    "Friday": "Sexta-feira",
+    "Saturday": "Sábado",
+    "Sunday": "Domingo"
+}
+print(weekday_pt[weekday_ing] + ", " + day_pt[day] + " de " + month_pt[month])
+tomorrow_temp_max = tomorrow_day.find(class_="wr-day-temperature__high")
+tomorrow_temp_max_C = tomorrow_temp_max.find(class_="wr-value--temperature--c").get_text()
+print("Temperatura máxima de " + tomorrow_temp_max_C)
+tomorrow_temp_min = tomorrow_day.find(class_="wr-day-temperature__low")
+tomorrow_temp_min_C = tomorrow_temp_min.find(class_="wr-value--temperature--c").get_text()
+print("Temperatura mínima de " + tomorrow_temp_min_C)
