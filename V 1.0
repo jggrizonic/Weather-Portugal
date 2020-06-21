@@ -1,23 +1,27 @@
 import requests
 from bs4 import BeautifulSoup
-print("(A) Albufeira;")
-print("(B) Lisboa;")
-print("(C) Porto;")
-print("(D) Viana do Castelo;")
-print("(E) Braga;")
-print("(F) Vila Real;")
-print("(G) Aveiro;")
-print("(H) Viseu;")
-print("(I) Coimbra;")
-print("(J) Castelo Branco;")
-print("(K) Leiria;")
-print("(L) Portalegre;")
-print("(M) Évora;")
-print("(N) Setúbal;")
-print("(O) Beja;")
-print("(P) Faro;")
-print("(Q) Madeira;")
-city = (input("Cidade: "))
+cidades = {
+    "(A)": "Albufeira;",
+    "(B)": "Lisboa;",
+    "(C)": "Porto;",
+    "(D)": "Viana do Castelo;",
+    "(E)": "Braga;",
+    "(F)": "Vila Real;",
+    "(G)": "Aveiro;",
+    "(H)": "Viseu;",
+    "(I)": "Coimbra;",
+    "(J)": "Castelo Branco;",
+    "(K)": "Leiria;",
+    "(L)": "Portalegre;",
+    "(M)": "Évora;",
+    "(N)": "Setúbal;",
+    "(O)": "Beja;",
+    "(P)": "Faro;",
+    "(Q)": "Madeira;",
+}
+for cidade in cidades.items():
+    print(cidade[0], cidade[1])
+city = (input("\nCidade: "))
 if city.upper() == "A":
     web_loc = "https://www.bbc.com/weather/2272222"
 elif city.upper() == "B":
